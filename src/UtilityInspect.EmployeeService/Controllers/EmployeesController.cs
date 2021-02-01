@@ -17,5 +17,17 @@ namespace UtilityInspect.EmployeeService.Controllers
             return Ok(employee);
         }
 
+        // POST api/v1/employees
+        [HttpPost]
+        public ActionResult<Employee> Create([FromBody]Employee employee)
+        {
+            Employee e = new Employee();
+            e.FirstName = employee.FirstName;
+            e.LastName = employee.LastName;
+            e.Role = employee.Role;
+
+            return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = e.EmployeeID }, employee);
+        }
+
     }
 }
