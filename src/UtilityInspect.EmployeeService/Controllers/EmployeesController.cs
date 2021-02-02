@@ -29,5 +29,17 @@ namespace UtilityInspect.EmployeeService.Controllers
             return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = e.EmployeeID }, employee);
         }
 
+        // PUT api/v1/employees/{employeeId}
+        [HttpPut("{employeeId}")]
+        public ActionResult<Employee> Update([FromBody] Employee employee)
+        {
+            Employee e = new Employee();
+            e.FirstName = employee.FirstName;
+            e.LastName = employee.LastName;
+            e.Role = employee.Role;
+
+            return NoContent();
+        }
+
     }
 }
