@@ -1,6 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using UtilityInspect.EmployeeService.Models;
+using UtilityInspect.EmployeeService.Repositories;
 
 namespace UtilityInspect.EmployeeService.Controllers
 {
@@ -9,11 +10,18 @@ namespace UtilityInspect.EmployeeService.Controllers
     public class EmployeesController: ControllerBase
     {
 
+        private readonly IEmployeeRepository _repository;
+
+        public EmployeesController(IEmployeeRepository repository)
+        {
+            _repository = repository;
+        }
+
         // GET api/v1/employess/{employeeId}
         [HttpGet("{employeeId}")]
         public ActionResult<Employee> GetEmployeeById(Guid employeeId)
         {
-            var employee = new Employee { FirstName="FirstName", LastName="LastName", Role="Field Tech" };
+            var employee = _repository.GetEmployeeById(employeeId);
             return Ok(employee);
         }
 

@@ -10,6 +10,16 @@ namespace UtilityInspect.EmployeeService.Repositories
 
         private List <Employee> _employees;
 
+        public EmployeeRepository()
+        {
+            InitializeData();
+        }
+
+        public IEnumerable<Employee> GetAll()
+        {
+            return _employees;
+        }
+
         public void Create(Employee employee)
         {
             _employees.Add(employee);
@@ -31,6 +41,40 @@ namespace UtilityInspect.EmployeeService.Repositories
             var index = _employees.IndexOf(e);
             _employees.RemoveAt(index);
             _employees.Insert(index, employee);
+        }
+
+
+        public void InitializeData()
+        {
+            _employees = new List<Employee>();
+
+            var employee1 = new Employee
+            {
+                EmployeeID = new Guid(),
+                FirstName = "Pepe",
+                LastName = "Pepito",
+                Role = "Field Tech"
+            };
+
+            var employee2 = new Employee
+            {
+                EmployeeID = new Guid(),
+                FirstName = "Jose",
+                LastName = "Joseito",
+                Role = "Engineer"
+            };
+
+            var employee3 = new Employee
+            {
+                EmployeeID = new Guid(),
+                FirstName = "Juan",
+                LastName = "Juanito",
+                Role = "Handyman"
+            };
+
+            _employees.Add(employee1);
+            _employees.Add(employee2);
+            _employees.Add(employee3);
         }
     }
 }
