@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UtilityInspect.EmployeeService.Data;
 using UtilityInspect.EmployeeService.Models;
 
 namespace UtilityInspect.EmployeeService.Repositories
@@ -9,9 +10,11 @@ namespace UtilityInspect.EmployeeService.Repositories
     {
 
         private List <Employee> _employees;
+        private EmployeeDbContext _context;
 
-        public EmployeeRepository()
+        public EmployeeRepository(EmployeeDbContext context)
         {
+            _context = context;
             InitializeData();
         }
 
