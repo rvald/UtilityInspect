@@ -46,7 +46,7 @@ namespace UtilityInspect.EmployeeService.Controllers
         }
 
         // PUT api/v1/employees/{employeeId}
-        [HttpPut("{employeeId}")]
+        [HttpPut]
         public ActionResult<Employee> Update([FromBody] Employee employee)
         {
             _repository.Update(employee);

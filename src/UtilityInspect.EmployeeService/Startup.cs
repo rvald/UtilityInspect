@@ -23,11 +23,11 @@ namespace UtilityInspect.EmployeeService
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-
-            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
-
             services.AddDbContext<EmployeeDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
