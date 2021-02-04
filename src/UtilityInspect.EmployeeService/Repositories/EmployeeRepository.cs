@@ -36,7 +36,7 @@ namespace UtilityInspect.EmployeeService.Repositories
 
         public Employee GetEmployeeById(Guid id)
         {
-            return _context.Employees.Single(e => e.EmployeeID == id);
+            return _context.Employees.Find(id);
         }
 
         public void Update(Employee employee)

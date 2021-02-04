@@ -33,6 +33,11 @@ namespace UtilityInspect.EmployeeService.Controllers
         {
             var employee = _repository.GetEmployeeById(employeeId);
 
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
             return Ok(employee);
         }
 
@@ -40,6 +45,11 @@ namespace UtilityInspect.EmployeeService.Controllers
         [HttpPost]
         public ActionResult<Employee> Create([FromBody]Employee employee)
         {
+            if (employee == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             _repository.Create(employee);
 
             return CreatedAtAction(nameof(GetEmployeeById), new { employeeId = employee.EmployeeID }, employee);
@@ -49,6 +59,14 @@ namespace UtilityInspect.EmployeeService.Controllers
         [HttpPut]
         public ActionResult<Employee> Update([FromBody] Employee employee)
         {
+
+            var e = GetEmployeeById(employee.EmployeeID);
+
+            if (e == null)
+            {
+                return NotFound();
+            }
+
             _repository.Update(employee);
 
             return NoContent();
@@ -58,6 +76,13 @@ namespace UtilityInspect.EmployeeService.Controllers
         [HttpDelete("{employeeId}")]
         public ActionResult Delete(Guid employeeId)
         {
+            var e = GetEmployeeById(employeeId);
+            
+            if (e == null)
+            {
+                return NotFound();
+            }
+
             _repository.Delete(employeeId);
 
             return NoContent();

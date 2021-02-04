@@ -8,7 +8,6 @@ namespace UtilityInspect.EmployeeService.Data
     {
         public static void Initialize(EmployeeDbContext context)
         {
-            context.Database.EnsureCreated();
 
             if (context.Employees.Any())
             {
