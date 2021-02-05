@@ -9,9 +9,9 @@ namespace UtilityInspect.EmployeeService.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private EmployeeDbContext _context;
+        private IEmployeeDbContext _context;
 
-        public EmployeeRepository(EmployeeDbContext context)
+        public EmployeeRepository(IEmployeeDbContext context)
         {
             _context = context;
         }

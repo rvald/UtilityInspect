@@ -27,9 +27,9 @@ namespace UtilityInspect.EmployeeService
 
             services.AddSingleton<IEmployeeDatabaseSettings>(sp => sp.GetRequiredService<IOptions<EmployeeDatabaseSettings>>().Value);
 
-            services.AddTransient<IEmployeeDbContext, EmployeeDbContext>();
+            services.AddSingleton<IEmployeeDbContext, EmployeeDbContext>();
 
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 
             services.AddControllers();
 

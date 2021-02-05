@@ -5,6 +5,6 @@ namespace UtilityInspect.EmployeeService.Data
 {
     public interface IEmployeeDbContext
     {
-        IMongoCollection<Employee> Employees { get;}
+        IMongoCollection<Employee> Employees { get; }
     }
 }
