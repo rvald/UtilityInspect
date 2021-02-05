@@ -1,0 +1,27 @@
+version: "3.9"
+
+services: 
+    employees-api:
+        build: 
+            context: .
+            dockerfile: UtilityInspect.EmployeeService/Dockerfile
+        environment: 
+            - "EmployeeDatabaseSettings:ConnectionString=mongodb://employees-db:27017"
+        ports: 
+            - "8081:80"
+        depends_on: 
+            - employees-db
+
+    employees-db:
+        image: mongo
+        restart: always
+        ports: 
+            - "27017:27017"
+        volumes: 
+            - "mongo_employee_db:/data/db"
+        
+
+    
+
+volumes: 
+    mongo_employee_db:
