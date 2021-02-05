@@ -1,12 +1,15 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace UtilityInspect.EmployeeService.Models
 {
     public class Employee
     {
-
-        public Guid EmployeeID { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string EmployeeID { get; set; }
 
         [Required]
         public string FirstName { get; set; }
