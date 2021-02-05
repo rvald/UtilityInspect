@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using UtilityInspect.EmployeeService.Models;
@@ -29,7 +28,7 @@ namespace UtilityInspect.EmployeeService.Controllers
 
         // GET api/v1/employees/{employeeId}
         [HttpGet("{employeeId}")]
-        public ActionResult<Employee> GetEmployeeById(Guid employeeId)
+        public ActionResult<Employee> GetEmployeeById(string employeeId)
         {
             var employee = _repository.GetEmployeeById(employeeId);
 
@@ -74,7 +73,7 @@ namespace UtilityInspect.EmployeeService.Controllers
 
         // DELETE api/v1/employees/{employeeId}
         [HttpDelete("{employeeId}")]
-        public ActionResult Delete(Guid employeeId)
+        public ActionResult Delete(string employeeId)
         {
             var e = GetEmployeeById(employeeId);
             

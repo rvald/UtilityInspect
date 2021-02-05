@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Driver;
 using UtilityInspect.EmployeeService.Data;
 using UtilityInspect.EmployeeService.Models;
 
@@ -17,31 +18,27 @@ namespace UtilityInspect.EmployeeService.Repositories
 
         public IEnumerable<Employee> GetAll()
         {
-            return _context.Employees.ToList();
+            return _context.Employees.Find(Employee => true).ToList();
         }
 
         public void Create(Employee employee)
         {
-            _context.Employees.Add(employee);
-            _context.SaveChanges();
+            _context.Employees.InsertOne(employee);
         }
 
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
-            Employee e = this.GetEmployeeById(id);
-            _context.Remove(e);
-            _context.SaveChanges();
+            _context.Employees.DeleteOne(e => e.EmployeeID == id);
         }
 
-        public Employee GetEmployeeById(Guid id)
+        public Employee GetEmployeeById(string id)
         {
-            return _context.Employees.Find(id);
+            return _context.Employees.Find<Employee>(e => e.EmployeeID == id).FirstOrDefault();
         }
 
         public void Update(Employee employee)
         {
-            _context.Entry(employee).State = EntityState.Modified;
-            _context.SaveChanges();
+            _context.Employees.ReplaceOne(e => e.EmployeeID == employee.EmployeeID, employee);
         }
     }
 }

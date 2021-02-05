@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using UtilityInspect.EmployeeService.Data;
 using UtilityInspect.EmployeeService.Repositories;
@@ -22,9 +22,12 @@ namespace UtilityInspect.EmployeeService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetSection("ConnectionStrings:DefaultConnection").Value;
+           
+            services.Configure<EmployeeDatabaseSettings>(Configuration.GetSection(nameof(EmployeeDatabaseSettings)));
 
-            services.AddDbContext<EmployeeDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddSingleton<IEmployeeDatabaseSettings>(sp => sp.GetRequiredService<IOptions<EmployeeDatabaseSettings>>().Value);
+
+            services.AddTransient<IEmployeeDbContext, EmployeeDbContext>();
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 

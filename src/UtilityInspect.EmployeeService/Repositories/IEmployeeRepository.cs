@@ -7,9 +7,9 @@ namespace UtilityInspect.EmployeeService.Repositories
     public interface IEmployeeRepository
     {
         IEnumerable<Employee> GetAll();
-        Employee GetEmployeeById(Guid id);
+        Employee GetEmployeeById(string id);
         void Create(Employee employee);
         void Update(Employee employee);
-        void Delete(Guid id);
+        void Delete(string id);
     }
 }

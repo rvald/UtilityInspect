@@ -1,24 +1,20 @@
-using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using UtilityInspect.EmployeeService.Models;
 
 namespace UtilityInspect.EmployeeService.Data
 {
-    public class EmployeeDbContext: DbContext
+    public class EmployeeDbContext : IEmployeeDbContext
     {
-        public EmployeeDbContext(DbContextOptions<EmployeeDbContext> options) : base(options)
+        public IMongoCollection<Employee> Employees { get; }
+
+        public EmployeeDbContext(IEmployeeDatabaseSettings settings)
         {
+
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            Employees = database.GetCollection<Employee>(settings.EmployeeCollectionName);
             
-        }
-        public DbSet<Employee> Employees { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
-            modelBuilder.HasPostgresExtension("uuid-ossp")
-                .Entity<Employee>()
-                .Property( e => e.EmployeeID)
-                .HasDefaultValueSql("uuid_generate_v4()");
-
         }
     }
 }
