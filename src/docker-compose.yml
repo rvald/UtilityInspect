@@ -1,6 +1,7 @@
 version: "3.9"
 
 services: 
+    
     employees-api:
         build: 
             context: .
@@ -12,6 +13,18 @@ services:
         depends_on: 
             - employees-db
 
+    fieldorder-api:
+        build:
+            context: .
+            dockerfile: UtilityInspect.FieldOrderService/Dockerfile
+        environment: 
+            - "FieldOrderDatabaseSettings:ConnectionString=mongodb://fieldorder-db:27017"
+        ports: 
+            - "8082:80"
+        depends_on: 
+            - fieldorder-db
+            
+
     employees-db:
         image: mongo
         restart: always
@@ -19,9 +32,16 @@ services:
             - "27017:27017"
         volumes: 
             - "mongo_employee_db:/data/db"
-        
 
-    
+    fieldorder-db:
+        image: mongo
+        restart: always
+        ports: 
+            - "27017:27017"
+        volumes: 
+            - "mongo_fieldorder_db:/data/db"
+        
 
 volumes: 
     mongo_employee_db:
+    mongo_fieldorder_db:
