@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using UtilityInspect.FieldOrderService.Data;
 using UtilityInspect.FieldOrderService.Repositories;
 
 namespace UtilityInspect.FieldOrderService
@@ -24,6 +26,10 @@ namespace UtilityInspect.FieldOrderService
             services.AddControllers();
 
             services.AddSingleton<IFieldOrderRepository, FieldOrderRepository>();
+
+            services.Configure<FieldOrderDatabaseSettings>(Configuration.GetSection(nameof(FieldOrderDatabaseSettings)));
+
+            services.AddSingleton<IFieldOrderDatabaseSettings>(sp => sp.GetRequiredService<IOptions<FieldOrderDatabaseSettings>>().Value);
 
             services.AddSwaggerGen(c =>
             {
