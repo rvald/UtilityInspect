@@ -21,11 +21,11 @@ namespace UtilityInspect.FieldOrderService.Repositories
 
         public void Delete(string fieldOrderId)
         {
-            var order = GetFieldOrderByID(fieldOrderId);
+            var order = GetFieldOrderById(fieldOrderId);
             fieldOrders.Remove(order);
         }
 
-        public FieldOrder GetFieldOrderByID(string fieldOrderId)
+        public FieldOrder GetFieldOrderById(string fieldOrderId)
         {
             return fieldOrders.FirstOrDefault(e => e.FieldOrderID == fieldOrderId);
         }
@@ -37,7 +37,7 @@ namespace UtilityInspect.FieldOrderService.Repositories
 
         public void Update(FieldOrder fieldOrder)
         {
-            var order = GetFieldOrderByID(fieldOrder.FieldOrderID);
+            var order = GetFieldOrderById(fieldOrder.FieldOrderID);
             var index = fieldOrders.IndexOf(order);
             fieldOrders.RemoveAt(index);
             fieldOrders.Add(fieldOrder);
