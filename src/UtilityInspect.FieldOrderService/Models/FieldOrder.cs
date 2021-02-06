@@ -11,7 +11,7 @@ namespace UtilityInspect.FieldOrderService.Models
         public string EmployeeID { get; set; }
 
         [Required]
-        public DateTime CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
 
         [Required]
         public string Notes { get; set; }
