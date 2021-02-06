@@ -1,46 +1,43 @@
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Driver;
+using UtilityInspect.FieldOrderService.Data;
 using UtilityInspect.FieldOrderService.Models;
 
 namespace UtilityInspect.FieldOrderService.Repositories
 {
     public class FieldOrderRepository : IFieldOrderRepository
     {
+        private readonly IFieldOrderDbContext _context;
 
-        private readonly List<FieldOrder> fieldOrders;
-
-        public FieldOrderRepository()
+        public FieldOrderRepository(IFieldOrderDbContext context)
         {
-            fieldOrders = new List<FieldOrder>();
+            _context = context;
         }
 
         public void Create(FieldOrder fieldOrder)
         {
-            fieldOrders.Add(fieldOrder);
+            _context.FieldOrders.InsertOne(fieldOrder);
         }
 
         public void Delete(string fieldOrderId)
         {
-            var order = GetFieldOrderById(fieldOrderId);
-            fieldOrders.Remove(order);
+            _context.FieldOrders.DeleteOne(order => order.FieldOrderID == fieldOrderId);
         }
 
         public FieldOrder GetFieldOrderById(string fieldOrderId)
         {
-            return fieldOrders.FirstOrDefault(e => e.FieldOrderID == fieldOrderId);
+            return _context.FieldOrders.Find<FieldOrder>(order => order.FieldOrderID == fieldOrderId).FirstOrDefault();
         }
 
         public IEnumerable<FieldOrder> GetFieldOrders()
         {
-            return fieldOrders.ToList();
+            return _context.FieldOrders.Find(order => true).ToList();
         }
 
         public void Update(FieldOrder fieldOrder)
         {
-            var order = GetFieldOrderById(fieldOrder.FieldOrderID);
-            var index = fieldOrders.IndexOf(order);
-            fieldOrders.RemoveAt(index);
-            fieldOrders.Add(fieldOrder);
+            _context.FieldOrders.ReplaceOne(order => order.FieldOrderID == fieldOrder.FieldOrderID, fieldOrder);
         }
     }
 }

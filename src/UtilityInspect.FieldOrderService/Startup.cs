@@ -31,6 +31,8 @@ namespace UtilityInspect.FieldOrderService
 
             services.AddSingleton<IFieldOrderDatabaseSettings>(sp => sp.GetRequiredService<IOptions<FieldOrderDatabaseSettings>>().Value);
 
+            services.AddSingleton<IFieldOrderDbContext, FieldOrderDbContext>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UtilityInspect.FieldOrderService", Version = "v1" });
