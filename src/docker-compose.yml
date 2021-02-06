@@ -1,47 +1,39 @@
 version: "3.9"
 
 services: 
-    
+
     employees-api:
         build: 
             context: .
             dockerfile: UtilityInspect.EmployeeService/Dockerfile
         environment: 
-            - "EmployeeDatabaseSettings:ConnectionString=mongodb://employees-db:27017"
+            - "EmployeeDatabaseSettings:ConnectionString=mongodb://microservice-db:27017"
         ports: 
             - "8081:80"
         depends_on: 
-            - employees-db
+            - microservice-db
 
     fieldorder-api:
         build:
             context: .
             dockerfile: UtilityInspect.FieldOrderService/Dockerfile
         environment: 
-            - "FieldOrderDatabaseSettings:ConnectionString=mongodb://fieldorder-db:27017"
+            - "FieldOrderDatabaseSettings:ConnectionString=mongodb://microservice-db:27017"
         ports: 
             - "8082:80"
         depends_on: 
-            - fieldorder-db
+            - microservice-db
             
 
-    employees-db:
+    microservice-db:
         image: mongo
         restart: always
         ports: 
             - "27017:27017"
         volumes: 
-            - "mongo_employee_db:/data/db"
+            - "microservice_db:/data/db"
 
-    fieldorder-db:
-        image: mongo
-        restart: always
-        ports: 
-            - "27017:27017"
-        volumes: 
-            - "mongo_fieldorder_db:/data/db"
         
 
 volumes: 
-    mongo_employee_db:
-    mongo_fieldorder_db:
+    microservice_db:
