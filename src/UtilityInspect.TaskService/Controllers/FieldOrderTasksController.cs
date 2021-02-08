@@ -7,7 +7,7 @@ using UtilityInspect.TaskService.Repositories;
 namespace UtilityInspect.TaskService.Controllers
 {
     [ApiController]
-    [Route("api/v1/tasks/[controller]")]
+    [Route("api/v1/tasks")]
     public class FieldOrderTasksController: ControllerBase
     {
 
@@ -20,7 +20,7 @@ namespace UtilityInspect.TaskService.Controllers
 
         // POST api/v1/tasks
         [HttpPost]
-        public ActionResult Create([FromBody] FieldOrderTask fieldOrderTask)
+        public ActionResult<FieldOrderTask> Create([FromBody] FieldOrderTask fieldOrderTask)
         {
             if (fieldOrderTask == null || !ModelState.IsValid)
             {
@@ -29,11 +29,11 @@ namespace UtilityInspect.TaskService.Controllers
 
             _fieldOrderTaskRepository.Create(fieldOrderTask);
 
-            return CreatedAtAction(nameof(GetFieldOrderTaskById), new { fielOrderTaskId = fieldOrderTask.FieldOrderTaskID }, fieldOrderTask);
+            return CreatedAtAction(nameof(GetFieldOrderTaskById), new { fieldOrderTaskId = fieldOrderTask.FieldOrderTaskID }, fieldOrderTask);
         }
 
-        // GET api/v1/tasks/{fielOrderTaskId}
-        [HttpGet("{fielOrderTaskId}")]
+        // GET api/v1/tasks/{fieldOrderTaskId}
+        [HttpGet("{fieldOrderTaskId}")]
         public ActionResult<FieldOrderTask> GetFieldOrderTaskById(Guid fieldOrderTaskId)
         {
             var e = _fieldOrderTaskRepository.GetFieldOrderTaskById(fieldOrderTaskId);
@@ -47,7 +47,7 @@ namespace UtilityInspect.TaskService.Controllers
         }
 
         // GET api/v1/tasks/{fieldOrderId}
-        [HttpGet("{fieldOrderId}")]
+        [HttpGet("{fieldOrderId}/fieldOrderTasks")]
         public ActionResult<IEnumerable<FieldOrderTask>> GetTasksByFieldOrderId(string fieldOrderId)
         {
             var results = _fieldOrderTaskRepository.GetTasksByFieldOrderId(fieldOrderId);
@@ -58,6 +58,13 @@ namespace UtilityInspect.TaskService.Controllers
             }
 
             return Ok(results);
+        }
+
+        // GET api/v1/tasks
+        [HttpGet]
+        public ActionResult<IEnumerable<FieldOrderTask>> GetAllFieldOrderTasks()
+        {
+            return Ok(_fieldOrderTaskRepository.GetAllFieldOrderTasks());
         }
 
 
