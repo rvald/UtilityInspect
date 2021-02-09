@@ -23,8 +23,18 @@ services:
             - "8082:80"
         depends_on: 
             - microservice-db
-            
 
+    task-api:
+        build: 
+            context: .
+            dockerfile: UtilityInspect.TaskService/Dockerfile
+        environment: 
+            - "TaskDatabaseSettings:ConnectionString=mongodb://microservice_db:27017"
+        ports: 
+            -"8083:80"
+        depends_on: 
+            - microservice_db
+            
     microservice-db:
         image: mongo
         restart: always
@@ -32,7 +42,6 @@ services:
             - "27017:27017"
         volumes: 
             - "microservice_db:/data/db"
-
         
 
 volumes: 
