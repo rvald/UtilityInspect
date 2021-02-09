@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using UtilityInspect.TaskService.Data;
 using UtilityInspect.TaskService.Repositories;
 
 namespace UtilityInspect.TaskService
@@ -21,6 +23,10 @@ namespace UtilityInspect.TaskService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.Configure<TaskDatabaseSettings>(Configuration.GetSection(nameof(TaskDatabaseSettings)));
+
+            services.AddSingleton<ITaskDatabaseSettings>(sp => sp.GetRequiredService<IOptions<TaskDatabaseSettings>>().Value);
 
             services.AddSingleton<IFieldOrderTaskRepository, FieldOrderTaskRepository>();
             

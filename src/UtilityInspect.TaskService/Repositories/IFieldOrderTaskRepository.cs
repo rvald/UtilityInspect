@@ -9,9 +9,9 @@ namespace UtilityInspect.TaskService.Repositories
        IEnumerable<FieldOrderTask> GetTasksByFieldOrderId(string fieldOrderId);
        IEnumerable<FieldOrderTask> GetAllFieldOrderTasks();
        void Create(FieldOrderTask fieldOrderTask);
-       FieldOrderTask GetFieldOrderTaskById(Guid fieldOrderTaskId);
+       FieldOrderTask GetFieldOrderTaskById(string fieldOrderTaskId);
        void Update(FieldOrderTask fieldOrderTask);
-       void Delete(Guid fieldOrderTaskId);
+       void Delete(string fieldOrderTaskId);
 
     }
 }

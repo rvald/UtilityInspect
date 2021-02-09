@@ -1,11 +1,15 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace UtilityInspect.TaskService.Models
 {
     public class FieldOrderTask
     {
-        public Guid FieldOrderTaskID { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string FieldOrderTaskID { get; set; }
 
         [Required]
         public string FieldOrderID { get; set; }

@@ -34,7 +34,7 @@ namespace UtilityInspect.TaskService.Controllers
 
         // GET api/v1/tasks/{fieldOrderTaskId}
         [HttpGet("{fieldOrderTaskId}")]
-        public ActionResult<FieldOrderTask> GetFieldOrderTaskById(Guid fieldOrderTaskId)
+        public ActionResult<FieldOrderTask> GetFieldOrderTaskById(string fieldOrderTaskId)
         {
             var e = _fieldOrderTaskRepository.GetFieldOrderTaskById(fieldOrderTaskId);
 
@@ -84,7 +84,7 @@ namespace UtilityInspect.TaskService.Controllers
 
         // DELETE api/v1/tasks/{fieldOrderTaskId}
         [HttpDelete("{fieldOrderTaskId}")]
-        public ActionResult Delete(Guid fieldOrderTaskId)
+        public ActionResult Delete(string fieldOrderTaskId)
         {
             var e = GetFieldOrderTaskById(fieldOrderTaskId);
 

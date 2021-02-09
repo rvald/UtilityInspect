@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Driver;
+using UtilityInspect.TaskService.Data;
 using UtilityInspect.TaskService.Models;
 
 namespace UtilityInspect.TaskService.Repositories
@@ -8,44 +10,40 @@ namespace UtilityInspect.TaskService.Repositories
     public class FieldOrderTaskRepository : IFieldOrderTaskRepository
     {
 
-        private readonly List<FieldOrderTask> fieldOrderTasks;
+        private readonly ITaskDbContext _context;
 
-        public FieldOrderTaskRepository()
+        public FieldOrderTaskRepository(ITaskDbContext context)
         {
-            fieldOrderTasks = new List<FieldOrderTask>();
+            _context = context;
         }
         public void Create(FieldOrderTask fieldOrderTask)
         {
-            fieldOrderTasks.Add(fieldOrderTask);
+            _context.Tasks.InsertOne(fieldOrderTask);
         }
 
-        public void Delete(Guid fieldOrderTaskId)
+        public void Delete(string fieldOrderTaskId)
         {
-           var f = GetFieldOrderTaskById(fieldOrderTaskId);
-           fieldOrderTasks.Remove(f);
+           _context.Tasks.DeleteOne(task => task.FieldOrderTaskID == fieldOrderTaskId);
         }
 
         public IEnumerable<FieldOrderTask> GetAllFieldOrderTasks()
         {
-            return fieldOrderTasks.ToList();
+            return _context.Tasks.Find(task => true).ToList();
         }
 
-        public FieldOrderTask GetFieldOrderTaskById(Guid fieldOrderTaskId)
+        public FieldOrderTask GetFieldOrderTaskById(string fieldOrderTaskId)
         {
-            return fieldOrderTasks.FirstOrDefault( e => e.FieldOrderTaskID == fieldOrderTaskId);
+            return _context.Tasks.Find<FieldOrderTask>(task => task.FieldOrderTaskID == fieldOrderTaskId).FirstOrDefault();
         }
 
         public IEnumerable<FieldOrderTask> GetTasksByFieldOrderId(string fieldOrderId)
         {
-            return fieldOrderTasks.FindAll(e => e.FieldOrderID == fieldOrderId);
+            return _context.Tasks.Find<FieldOrderTask>(task => task.FieldOrderID == fieldOrderId).ToList();
         }
 
         public void Update(FieldOrderTask fieldOrderTask)
         {
-            var f = GetFieldOrderTaskById(fieldOrderTask.FieldOrderTaskID);
-            var index = fieldOrderTasks.IndexOf(f);
-            fieldOrderTasks.RemoveAt(index);
-            fieldOrderTasks.Insert(index, fieldOrderTask);
+            _context.Tasks.ReplaceOne(task => task.FieldOrderTaskID == fieldOrderTask.FieldOrderTaskID, fieldOrderTask);
         }
     }
 }
