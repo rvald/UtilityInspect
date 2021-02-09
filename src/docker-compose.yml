@@ -33,7 +33,7 @@ services:
         ports: 
             - "8083:80"
         depends_on: 
-            - microservice_db
+            - microservice-db
             
     microservice-db:
         image: mongo
