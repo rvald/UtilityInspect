@@ -31,7 +31,7 @@ services:
         environment: 
             - "TaskDatabaseSettings:ConnectionString=mongodb://microservice_db:27017"
         ports: 
-            -"8083:80"
+            - "8083:80"
         depends_on: 
             - microservice_db
             
@@ -43,6 +43,5 @@ services:
         volumes: 
             - "microservice_db:/data/db"
         
-
 volumes: 
     microservice_db:
