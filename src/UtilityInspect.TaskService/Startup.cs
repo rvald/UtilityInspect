@@ -28,6 +28,8 @@ namespace UtilityInspect.TaskService
 
             services.AddSingleton<ITaskDatabaseSettings>(sp => sp.GetRequiredService<IOptions<TaskDatabaseSettings>>().Value);
 
+            services.AddSingleton<ITaskDbContext, TaskDbContext>();
+
             services.AddSingleton<IFieldOrderTaskRepository, FieldOrderTaskRepository>();
             
             services.AddSwaggerGen(c =>
